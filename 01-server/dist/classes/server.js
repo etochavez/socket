@@ -14,4 +14,4 @@ class Server {
         this.app.listen(this.port, callback);
     }
 }
-exports.default = Server;
+exports.Server = Server;
