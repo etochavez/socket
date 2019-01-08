@@ -16,6 +16,8 @@ export class Server {
 
     this.httpServer = new http.Server(this.app);
     this.io = socketIO(this.httpServer);
+
+    this.escucharSocket();
   }
 
   public static get instance() {
@@ -25,7 +27,7 @@ export class Server {
   private escucharSocket() {
     console.log("Escuchando sockets");
 
-    this.io.on("conection", client => {
+    this.io.on("connection", client => {
       console.log("conected new client");
     });
   }
