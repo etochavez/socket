@@ -1,4 +1,4 @@
-/dist/
+*/dist/
 /bazel-*
 /integration/bazel/bazel-*
 e2e_test.*
