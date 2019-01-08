@@ -10,8 +10,25 @@ router.get("/messages", (req: Request, res: Response) => {
 });
 
 router.post("/messages", (req: Request, res: Response) => {
+  const text = req.body.text;
+  const from = req.body.from;
+
   res.json({
     error: false,
-    message: "POST ready"
+    text,
+    from,
+  });
+});
+
+router.post("/messages/:id", (req: Request, res: Response) => {
+  const text = req.body.text;
+  const from = req.body.from;
+  const id = req.params.id;
+
+  res.json({
+    error: false,
+    text,
+    from,
+    id,
   });
 });
