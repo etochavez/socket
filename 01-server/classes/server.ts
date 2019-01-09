@@ -32,6 +32,8 @@ export class Server {
       console.log("client connected");
 
       socket.disconnect(client);
+
+      socket.message(client);
     });
   }
 
