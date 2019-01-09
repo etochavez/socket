@@ -2,6 +2,7 @@ import express from "express";
 import { SERVER_PORT } from "../global/environment";
 import socketIO from "socket.io";
 import http from "http";
+import * as socket from "../sockets/sockets";
 
 export class Server {
   private static _instance: Server;
@@ -21,19 +22,20 @@ export class Server {
   }
 
   public static get instance() {
-    return this._instance || ( this._instance = new this())
+    return this._instance || (this._instance = new this());
   }
 
   private escucharSocket() {
     console.log("Escuchando sockets");
 
     this.io.on("connection", client => {
-      console.log("conected new client");
+      console.log("client connected");
+
+      socket.disconnect(client);
     });
   }
 
-  public start( callback: () => void ) {
-      this.httpServer.listen(this.port, callback);
+  public start(callback: () => void) {
+    this.httpServer.listen(this.port, callback);
   }
-
 }

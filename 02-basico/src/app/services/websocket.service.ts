@@ -19,7 +19,7 @@ export class WebsocketService {
 
     this.socket.on('disconnect', () => {
       console.log('Disconnected to server');
-      this.socketStatus = true;
+      this.socketStatus = false;
     });
   }
 }

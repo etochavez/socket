@@ -5,7 +5,7 @@ export const router = Router();
 router.get("/messages", (req: Request, res: Response) => {
   res.json({
     error: false,
-    message: "All its ok"
+    message: "All its ok!!"
   });
 });
 
@@ -16,7 +16,7 @@ router.post("/messages", (req: Request, res: Response) => {
   res.json({
     error: false,
     text,
-    from,
+    from
   });
 });
 
@@ -29,6 +29,6 @@ router.post("/messages/:id", (req: Request, res: Response) => {
     error: false,
     text,
     from,
-    id,
+    id
   });
 });

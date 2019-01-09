@@ -7,10 +7,12 @@ const config: SocketIoConfig = { url: environment.wsUrl, options: {} };
 
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
+import { FooteComponent } from './components/foote/foote.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    FooteComponent
   ],
   imports: [
     BrowserModule,
