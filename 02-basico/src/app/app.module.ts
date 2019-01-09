@@ -10,12 +10,18 @@ import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { FooteComponent } from './components/foote/foote.component';
 import { ChatComponent } from './components/chat/chat.component';
+import { UserListComponent } from './components/user-list/user-list.component';
+import { LoginComponent } from './pages/login/login.component';
+import { MessagesComponent } from './pages/messages/messages.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FooteComponent,
-    ChatComponent
+    ChatComponent,
+    UserListComponent,
+    LoginComponent,
+    MessagesComponent
   ],
   imports: [
     BrowserModule,
