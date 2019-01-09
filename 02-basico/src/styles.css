@@ -6,3 +6,18 @@ footer {
     left: 0px;
     width: 100%;
 }
+
+body {
+    margin-bottom: 100px;
+}
+
+#chat-message {
+    height: 300px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    overflow-y: scroll;
+}
+
+.chat-input {
+    margin-top: 10px;
+}
