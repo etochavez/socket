@@ -23,12 +23,20 @@ export class WebsocketService {
     });
   }
 
-  emit(event: string, payload?: any, callback?: () =>{}){
+  emit(event: string, payload?: any, callback?: Function) {
     this.socket.emit(event, payload, callback);
   }
 
   listen(event: string) {
     return this.socket.fromEvent(event);
+  }
+
+  // OUT
+  loginWS(name: string) {
+    console.log('Config', name);
+    this.emit('config-user', {name}, resp => {
+      console.log(resp);
+    });
   }
 
 }

@@ -14,4 +14,14 @@ export const message = (client: Socket, io: socketIO.Server) => {
 
     io.emit('new-message', payload);
   });
+
+  client.on("config-user", (payload: {name: string}, callback: (arg:{error: boolean, message: string}) => {}) => {
+    console.log(payload.name);
+
+    callback({
+      error: false,
+      message: `User ${payload.name}, configured`
+    });
+
+  });
 };
