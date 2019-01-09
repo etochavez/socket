@@ -33,7 +33,7 @@ export class Server {
 
       socket.disconnect(client);
 
-      socket.message(client);
+      socket.message(client, this.io);
     });
   }
 
