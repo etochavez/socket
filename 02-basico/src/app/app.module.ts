@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {FormsModule} from '@angular/forms';
+import { AppRoutingModule } from './app-routing.module';
 
 // Sockets
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
@@ -26,7 +27,8 @@ import { MessagesComponent } from './pages/messages/messages.component';
   imports: [
     BrowserModule,
     FormsModule,
-    SocketIoModule.forRoot(config)
+    SocketIoModule.forRoot(config),
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
