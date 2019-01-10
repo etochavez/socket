@@ -1,4 +1,5 @@
 import { Request, Response, Router } from "express";
+import { Server } from '../classes/server';
 
 export const router = Router();
 
@@ -24,6 +25,14 @@ router.post("/messages/:id", (req: Request, res: Response) => {
   const text = req.body.text;
   const from = req.body.from;
   const id = req.params.id;
+
+  const payload = {
+    from,
+    text
+  };
+
+  const server = Server.instance;
+  server.io.in(id).emit('private-message', payload);
 
   res.json({
     error: false,
