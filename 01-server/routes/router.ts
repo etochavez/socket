@@ -43,3 +43,21 @@ router.post("/messages/:id", (req: Request, res: Response) => {
     id
   });
 });
+
+
+router.get("/users", (req: Request, res: Response) => {
+  const server = Server.instance;
+  server.io.clients( (err: any, clients: string) => {
+    if (err) {
+      return res.json({
+        error: true,
+        message: err
+      });
+    }
+
+    res.json({
+      error: false,
+      clients
+    });
+  });
+});
