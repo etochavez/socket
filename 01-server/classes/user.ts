@@ -3,9 +3,9 @@ export class User {
   public name: string;
   public room: string;
 
-  constructor( id: string) {
+  constructor(id: string) {
     this.id = id;
-    this.name = 'unamed';
-    this.room = 'no-room';
+    this.name = "unamed";
+    this.room = "no-room";
   }
 }

@@ -1,4 +1,4 @@
-import { User } from './user';
+import { User } from "./user";
 export class UserList {
   private list: User[] = [];
   constructor() {}
@@ -15,7 +15,7 @@ export class UserList {
       user.name = name;
     }
 
-    console.log('Update user name');
+    console.log("Update user name");
     console.log(this.list);
   }
 
@@ -29,7 +29,7 @@ export class UserList {
   }
 
   public getAllRoomUsers(room: string) {
-    return this.list.filter(e => e.room === room)
+    return this.list.filter(e => e.room === room);
   }
 
   public deleteUser(id: string) {

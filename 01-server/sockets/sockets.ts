@@ -1,9 +1,18 @@
 import { Socket } from "socket.io";
-import socketIO from 'socket.io';
+import socketIO from "socket.io";
+import { UserList } from "../classes/users-list";
+import { User } from "../classes/user";
+
+export const conectedUser = new UserList();
+
+export const conectClient = (client: Socket) => {
+  const user = new User(client.id);
+  conectedUser.addUser(user);
+};
 
 export const disconnect = (client: Socket) => {
   client.on("disconnect", () => {
-    console.log("client disconnected");
+    conectedUser.deleteUser(client.id);
   });
 };
 
@@ -12,16 +21,14 @@ export const message = (client: Socket, io: socketIO.Server) => {
   client.on("message", (payload: { from: string; text: string }) => {
     console.log("Message received", payload);
 
-    io.emit('new-message', payload);
+    io.emit("new-message", payload);
   });
 
-  client.on("config-user", (payload: {name: string}, callback: (arg:{error: boolean, message: string}) => {}) => {
-    console.log(payload.name);
-
+  client.on("config-user", (payload: { name: string }, callback: Function) => {
+    conectedUser.updateName(client.id, payload.name);
     callback({
       error: false,
       message: `User ${payload.name}, configured`
     });
-
   });
 };

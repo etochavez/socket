@@ -29,10 +29,8 @@ export class Server {
     console.log("Escuchando sockets");
 
     this.io.on("connection", client => {
-      console.log("client connected");
-
+      socket.conectClient(client);
       socket.disconnect(client);
-
       socket.message(client, this.io);
     });
   }
