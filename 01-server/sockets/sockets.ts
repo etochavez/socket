@@ -35,4 +35,10 @@ export const message = (client: Socket, io: socketIO.Server) => {
       message: `User ${payload.name}, configured`
     });
   });
+
+  client.on("get-users", () => {
+    io.to(client.id).emit('active-users', conectedUser.getList());
+  });
 };
+
+
