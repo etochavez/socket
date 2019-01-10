@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
+import { resolve } from 'dns';
+import { User } from 'src/models/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WebsocketService {
   public socketStatus = false;
+  public user: User;
 
   constructor( private socket: Socket) {
+    this.loadStorage();
     this.checkStatus();
   }
 
@@ -33,10 +37,27 @@ export class WebsocketService {
 
   // OUT
   loginWS(name: string) {
-    console.log('Config', name);
-    this.emit('config-user', {name}, resp => {
-      console.log(resp);
+    return new Promise((resolve, reject) => {
+      this.emit('config-user', {name}, resp => {
+        if (resp.error) {
+          reject();
+        } else {
+          this.user = new User(name);
+          this.saveStorage();
+          resolve();
+        }
+      });
     });
+  }
+
+  saveStorage() {
+    localStorage.setItem('user', JSON.stringify(this.user));
+  }
+
+  loadStorage(){
+    if (localStorage.getItem('user')) {
+      this.user = JSON.parse(localStorage.getItem('user'));
+    }
   }
 
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { WebsocketService } from '../../services/websocket.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -9,16 +10,17 @@ import { WebsocketService } from '../../services/websocket.service';
 export class LoginComponent implements OnInit {
   name = '';
 
-  constructor(public wsService: WebsocketService) { }
+  constructor(public wsService: WebsocketService, private router: Router) { }
 
   ngOnInit() {
   }
 
   enter() {
-    if (this.name.trim().length === 0) {
-      return;
-    }
-    this.wsService.loginWS(this.name);
+    if (this.name.trim().length === 0) {return;} // Verifico que nombre no este vacio
+    this.wsService.loginWS(this.name)
+    .then(() => {
+      this.router.navigateByUrl('/messages');
+    });
   }
 
 }
