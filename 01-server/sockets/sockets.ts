@@ -5,14 +5,15 @@ import { User } from "../classes/user";
 
 export const conectedUser = new UserList();
 
-export const conectClient = (client: Socket) => {
+export const conectClient = (client: Socket, io: socketIO.Server) => {
   const user = new User(client.id);
   conectedUser.addUser(user);
 };
 
-export const disconnect = (client: Socket) => {
+export const disconnect = (client: Socket, io: socketIO.Server) => {
   client.on("disconnect", () => {
     conectedUser.deleteUser(client.id);
+    io.emit('active-users', conectedUser.getList());
   });
 };
 
@@ -26,6 +27,9 @@ export const message = (client: Socket, io: socketIO.Server) => {
 
   client.on("config-user", (payload: { name: string }, callback: Function) => {
     conectedUser.updateName(client.id, payload.name);
+
+    io.emit('active-users', conectedUser.getList());
+
     callback({
       error: false,
       message: `User ${payload.name}, configured`

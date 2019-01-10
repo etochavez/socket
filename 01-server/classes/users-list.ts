@@ -21,7 +21,7 @@ export class UserList {
 
   // Get user list
   public getList() {
-    return this.list;
+    return this.list.filter(user => user.name !== 'unamed');
   }
 
   public getUser(id: string) {
