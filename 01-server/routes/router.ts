@@ -1,5 +1,6 @@
 import { Request, Response, Router } from "express";
 import { Server } from '../classes/server';
+import { conectedUser } from "../sockets/sockets";
 
 export const router = Router();
 
@@ -59,5 +60,13 @@ router.get("/users", (req: Request, res: Response) => {
       error: false,
       clients
     });
+  });
+});
+
+router.get("/users/details", (req: Request, res: Response) => {
+  conectedUser.getList()
+  res.json({
+    error: false,
+    clienst: conectedUser.getList()
   });
 });
