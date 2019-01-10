@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
-import { resolve } from 'dns';
 import { User } from 'src/models/user';
 
 @Injectable({
@@ -48,6 +47,10 @@ export class WebsocketService {
         }
       });
     });
+  }
+
+  getUser() {
+    return this.user;
   }
 
   saveStorage() {
