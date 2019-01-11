@@ -22,6 +22,12 @@ export const newMarker = (client: Socket, io: socketIO.Server) => {
     //io.emit('new-marker', marker);
   });
 
+  client.on('move-marker', (marker) => {
+    map.moveBookmarker(marker);
+    client.broadcast.emit('move-marker', marker); // Broadcast emite a todos menos al q emite
+    //io.emit('new-marker', marker);
+  });
+
 };
 
 export const conectedUser = new UserList();

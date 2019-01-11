@@ -40,12 +40,26 @@ export class MapComponent implements OnInit {
     .subscribe( (marker: Place) => {
       this.addBookmark(marker);
     });
+
     // move marker
+    this.wsService.listen('move-marker')
+    .subscribe( (marker: Place) => {
+      this.moveBookmark(marker);
+    });
+
+    // delete marker
     this.wsService.listen('del-marker')
     .subscribe( (id: string) => {
       this.delBookmark(id);
     });
-    // delete marker
+  }
+  moveBookmark(marker: Place): any {
+    this.markers.forEach( mark => {
+      if (mark.getTitle() === marker.id) {
+        const latLang = new google.maps.LatLng(marker.lat, marker.lng);
+        mark.setPosition(latLang);
+      }
+    });
   }
 
   public delBookmark( id: string): void {
@@ -116,8 +130,9 @@ export class MapComponent implements OnInit {
         name: bookmark.name,
         id: marker.getTitle()
       };
-      console.log(newMarker);
+
       //Disparara un evento de socket, para mover el marcador
+      this.wsService.emit('move-marker', newMarker);
     });
   }
 
