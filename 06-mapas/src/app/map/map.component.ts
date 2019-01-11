@@ -13,19 +13,21 @@ export class MapComponent implements OnInit {
 
   markers: google.maps.Marker[] = [];
 
+  infoWindows: google.maps.InfoWindow[] = [];
+
   places: Place[] = [
     {
-      nombre: 'Udemy',
+      name: 'Udemy',
       lat: 37.784679,
       lng: -122.395936
     },
     {
-      nombre: 'Bahía de San Francisco',
+      name: 'Bahía de San Francisco',
       lat: 37.798933,
       lng: -122.377732
     },
     {
-      nombre: 'The Palace Hotel',
+      name: 'The Palace Hotel',
       lat: 37.788578,
       lng: -122.401745
     }
@@ -60,6 +62,34 @@ export class MapComponent implements OnInit {
       draggable: true
     });
     this.markers.push(marker);
+
+    // Creando el InfoWindows
+    const content = `<b>${bookmark.name}</b>`;
+    const infoWindow = new google.maps.InfoWindow({
+      content: content
+    });
+
+    this.infoWindows.push(infoWindow);
+
+    google.maps.event.addDomListener(marker, 'click', () => {
+      this.infoWindows.forEach(infow => infow.close());
+      infoWindow.open(this.map, marker);
+    });
+
+    google.maps.event.addDomListener(marker, 'dblclick', (coors) => {
+      marker.setMap(null);
+      //Disparara un evento de socket, para borrar el marcador
+    });
+
+    google.maps.event.addDomListener(marker, 'drag', (coors) => {
+      const newMarker = {
+        lat: coors.latLng.lat(),
+        lng: coors.latLng.lng(),
+        name: bookmark.name
+      };
+      console.log(newMarker);
+      //Disparara un evento de socket, para mover el marcador
+    });
   }
 
 }
