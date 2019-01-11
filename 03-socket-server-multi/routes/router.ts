@@ -18,7 +18,7 @@ router.post("/graph", (req: Request, res: Response) => {
   graph.changeValue(month, value)
 
   const server = Server.instance;
-  //server.io.emit('new-message', payload);
+  server.io.emit('graph-data', graph.getGraphData());
 
   res.json(graph.getGraphData());
 });
