@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Place } from '../interfaces/place';
+import { containerRefreshStart } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-map',
@@ -48,6 +49,18 @@ export class MapComponent implements OnInit {
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOPtions);
+
+    this.map.addListener('click', (coors) => {
+      const newBookmark: Place = {
+        name: 'New Place',
+        lat: coors.latLng.lat(),
+        lng: coors.latLng.lng(),
+        id: new Date().toISOString()
+      };
+
+      this.addBookmark(newBookmark);
+      // Emitir evento de socket al agregar marcador
+    });
 
     this.places.forEach((place: Place, i: number) => this.addBookmark(place));
   }
