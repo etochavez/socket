@@ -11,16 +11,32 @@ router.get("/graph", (req: Request, res: Response) => {
   res.json(graph.getGraphData());
 });
 
+router.get("/graph/bar", (req: Request, res: Response) => {
+  res.json(graph.getBarGraphData());
+});
+
 router.post("/graph", (req: Request, res: Response) => {
   const month = req.body.month;
   const value = Number(req.body.value);
 
-  graph.changeValue(month, value)
+  graph.changeValueLineGraph(month, value)
 
   const server = Server.instance;
   server.io.emit('graph-data', graph.getGraphData());
 
   res.json(graph.getGraphData());
+});
+
+router.post("/graph/bar", (req: Request, res: Response) => {
+  const index = req.body.index;
+  const value = Number(req.body.value);
+
+  graph.changeValueBarGraph(index, value)
+
+  const server = Server.instance;
+  server.io.emit('bar-graph-data', graph.getBarGraphData());
+
+  res.json(graph.getBarGraphData());
 });
 
 router.get("/messages", (req: Request, res: Response) => {
