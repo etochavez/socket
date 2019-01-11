@@ -2,8 +2,39 @@ import { Request, Response, Router } from "express";
 import { Server } from '../classes/server';
 import { conectedUser } from "../sockets/sockets";
 import { Graph } from "../classes/graph";
+import { Map } from '../classes/map';
 
 export const router = Router();
+
+const map = new Map();
+const places = [
+  {
+    id: '1',
+    name: 'Udemy',
+    lat: 37.784679,
+    lng: -122.395936
+  },
+  {
+    id: '2',
+    name: 'Bahía de San Francisco',
+    lat: 37.798933,
+    lng: -122.377732
+  },
+  {
+    id: '3',
+    name: 'The Palace Hotel',
+    lat: 37.788578,
+    lng: -122.401745
+  }
+];
+
+// inseta en el push cada elemento por separado
+map.bookmarkers.push(...places);
+
+router.get("/markers", (req: Request, res: Response) => {
+  res.json(map.getBookmarkers());
+});
+
 
 const graph = new Graph();
 

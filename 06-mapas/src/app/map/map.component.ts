@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Place } from '../interfaces/place';
 import { containerRefreshStart } from '@angular/core/src/render3';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-map',
@@ -16,32 +17,22 @@ export class MapComponent implements OnInit {
 
   infoWindows: google.maps.InfoWindow[] = [];
 
-  places: Place[] = [
-    {
-      name: 'Udemy',
-      lat: 37.784679,
-      lng: -122.395936
-    },
-    {
-      name: 'Bahía de San Francisco',
-      lat: 37.798933,
-      lng: -122.377732
-    },
-    {
-      name: 'The Palace Hotel',
-      lat: 37.788578,
-      lng: -122.401745
-    }
-  ];
+  places: Place[] = [];
 
-  constructor() { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
   ngOnInit() {
-    this.loadMap();
+    this.http.get('http://localhost:5000/markers')
+    .subscribe( (places: Place[]) => {
+      this.places = places;
+      this.loadMap();
+    });
     this.listenSocket();
   }
 
-  listenSocket(){
+  listenSocket() {
     // New Bookmarker
     // move marker
     // delete marker
@@ -79,7 +70,8 @@ export class MapComponent implements OnInit {
       map: this.map,
       animation: google.maps.Animation.DROP,
       position: latLng,
-      draggable: true
+      draggable: true,
+      title: bookmark.id
     });
     this.markers.push(marker);
 
@@ -105,7 +97,8 @@ export class MapComponent implements OnInit {
       const newMarker = {
         lat: coors.latLng.lat(),
         lng: coors.latLng.lng(),
-        name: bookmark.name
+        name: bookmark.name,
+        id: marker.getTitle()
       };
       console.log(newMarker);
       //Disparara un evento de socket, para mover el marcador
