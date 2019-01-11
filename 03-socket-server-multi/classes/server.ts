@@ -34,7 +34,7 @@ export class Server {
       socket.message(client, this.io);
 
       // maps
-      socket.newMarker(client);
+      socket.newMarker(client, this.io);
     });
   }
 

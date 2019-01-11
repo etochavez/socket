@@ -8,12 +8,20 @@ import { map } from '../routes/router';
 /**
  * Maps
  */
-export const newMarker = (client: Socket) => {
+export const newMarker = (client: Socket, io: socketIO.Server) => {
   client.on('new-marker', (marker) => {
     map.addBookmarker(marker);
     client.broadcast.emit('new-marker', marker); // Broadcast emite a todos menos al q emite
     //io.emit('new-marker', marker);
   });
+
+
+  client.on('del-marker', (marker) => {
+    map.delBookmarker(marker.id);
+    client.broadcast.emit('del-marker', marker.id); // Broadcast emite a todos menos al q emite
+    //io.emit('new-marker', marker);
+  });
+
 };
 
 export const conectedUser = new UserList();
