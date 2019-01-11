@@ -2,6 +2,19 @@ import { Socket } from "socket.io";
 import socketIO from "socket.io";
 import { UserList } from "../classes/users-list";
 import { User } from "../classes/user";
+import { map } from '../routes/router';
+
+
+/**
+ * Maps
+ */
+export const newMarker = (client: Socket) => {
+  client.on('new-marker', (marker) => {
+    map.addBookmarker(marker);
+    client.broadcast.emit('new-marker', marker); // Broadcast emite a todos menos al q emite
+    //io.emit('new-marker', marker);
+  });
+};
 
 export const conectedUser = new UserList();
 

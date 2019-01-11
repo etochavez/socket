@@ -36,6 +36,10 @@ export class MapComponent implements OnInit {
 
   listenSocket() {
     // New Bookmarker
+    this.wsService.listen('new-marker')
+    .subscribe( (marker: Place) => {
+      this.addBookmark(marker);
+    });
     // move marker
     // delete marker
   }
@@ -60,6 +64,7 @@ export class MapComponent implements OnInit {
 
       this.addBookmark(newBookmark);
       // Emitir evento de socket al agregar marcador
+      this.wsService.emit('new-marker', newBookmark);
     });
 
     this.places.forEach((place: Place, i: number) => this.addBookmark(place));

@@ -6,7 +6,7 @@ import { Map } from '../classes/map';
 
 export const router = Router();
 
-const map = new Map();
+export const map = new Map();
 const places = [
   {
     id: '1',
