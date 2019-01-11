@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Place } from '../interfaces/place';
 import { containerRefreshStart } from '@angular/core/src/render3';
 import { HttpClient } from '@angular/common/http';
+import { WebsocketService } from '../services/websocket.service';
 
 @Component({
   selector: 'app-map',
@@ -20,7 +21,8 @@ export class MapComponent implements OnInit {
   places: Place[] = [];
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    public wsService: WebsocketService
   ) { }
 
   ngOnInit() {
