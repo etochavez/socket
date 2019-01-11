@@ -1,5 +1,5 @@
 export class Graph {
-  private months: Array<string> = ["January", "February", "March", "April"];
+  private months: Array<string> = ["january", "february", "march", "april"];
   private values: Array<number> = [1, 2, 3, 4];
 
   constructor() {}

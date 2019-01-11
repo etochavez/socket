@@ -1,8 +1,27 @@
 import { Request, Response, Router } from "express";
 import { Server } from '../classes/server';
 import { conectedUser } from "../sockets/sockets";
+import { Graph } from "../classes/graph";
 
 export const router = Router();
+
+const graph = new Graph();
+
+router.get("/graph", (req: Request, res: Response) => {
+  res.json(graph.getGraphData());
+});
+
+router.post("/graph", (req: Request, res: Response) => {
+  const month = req.body.month;
+  const value = Number(req.body.value);
+
+  graph.changeValue(month, value)
+
+  const server = Server.instance;
+  //server.io.emit('new-message', payload);
+
+  res.json(graph.getGraphData());
+});
 
 router.get("/messages", (req: Request, res: Response) => {
   res.json({

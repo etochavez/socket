@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-graph',
@@ -12,20 +13,17 @@ export class GraphComponent implements OnInit {
   ];
   public lineChartLabels: Array<any> = ['January', 'February', 'March', 'April'];
 
-  constructor() { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
   ngOnInit() {
-    setInterval(() => {
-      const newData = [
-        Math.round(Math.random() * 100),
-        Math.round(Math.random() * 100),
-        Math.round(Math.random() * 100),
-        Math.round(Math.random() * 100)
-      ];
-      this.lineChartData = [
-        { data: newData, label: 'Sells'}
-      ];
-    }, 1500);
+    this.getData();
+  }
+
+  public getData() {
+    this.http.get("http://localhost:5000/graph")
+    .subscribe( (data: any) => this.lineChartData = data)
   }
 
 }
