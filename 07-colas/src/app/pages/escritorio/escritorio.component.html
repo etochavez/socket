@@ -1,7 +1,17 @@
-<h1>Escritorio</h1>
-<h4>Atendiendo a <small>....</small></h4>
+<h1>Escritorio {{escritorioNumero}}</h1>
+<h4>Atendiendo a 
+    <small>
+        <ng-container *ngIf="currentTicket===0; else elseTemplate">
+        --
+        </ng-container>
+        <ng-template #elseTemplate>
+            {{currentTicket}}
+        </ng-template>
+    </small>
+</h4>
+
 <hr>
 
-<button class="btn btn-primary btn-lg">
+<button (click)="next()" class="btn btn-primary btn-lg">
     Atender siguiente ticket
 </button>

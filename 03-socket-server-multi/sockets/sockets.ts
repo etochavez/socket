@@ -3,7 +3,18 @@ import socketIO from "socket.io";
 import { UserList } from "../classes/users-list";
 import { User } from "../classes/user";
 import { map } from '../routes/router';
+import { TicketArrayRepository } from "../repositories/ticketArrayRepository";
 
+
+/**
+ * 
+ * @param client 
+ * @param io 
+ */
+export const colas = (client: Socket, io: socketIO.Server) => {
+  const ticketRepository = TicketArrayRepository.instance;
+  io.to(client.id).emit('last-ticket', ticketRepository.last());
+};
 
 /**
  * Maps
@@ -47,8 +58,6 @@ export const disconnect = (client: Socket, io: socketIO.Server) => {
 // Escuchar mensajes
 export const message = (client: Socket, io: socketIO.Server) => {
   client.on("message", (payload: { from: string; text: string }) => {
-    console.log("Message received", payload);
-
     io.emit("new-message", payload);
   });
 

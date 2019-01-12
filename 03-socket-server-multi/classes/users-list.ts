@@ -5,7 +5,6 @@ export class UserList {
 
   public addUser(user: User) {
     this.list.push(user);
-    console.log(this.list);
     return user;
   }
 
@@ -14,9 +13,6 @@ export class UserList {
     if (user) {
       user.name = name;
     }
-
-    console.log("Update user name");
-    console.log(this.list);
   }
 
   // Get user list

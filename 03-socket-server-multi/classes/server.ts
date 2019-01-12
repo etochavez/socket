@@ -32,6 +32,7 @@ export class Server {
       socket.conectClient(client, this.io);
       socket.disconnect(client, this.io);
       socket.message(client, this.io);
+      socket.colas(client, this.io);
 
       // maps
       socket.newMarker(client, this.io);

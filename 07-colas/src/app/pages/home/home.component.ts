@@ -11,6 +11,8 @@ export class HomeComponent implements OnInit {
   constructor( private router: Router) { }
 
   ngOnInit() {
+    const body = document.getElementsByTagName('body')[0];
+    body.classList.add('container');
   }
 
   public entrar(numero: Number) {
